@@ -14,7 +14,7 @@
 
 6- `matt-daneshvar/laravel-survey`
 
-
+7- `simplesoftwareio/simple-qrcode`
 ## Theme :
 
 Majestic Admin , Bootstrap 4
