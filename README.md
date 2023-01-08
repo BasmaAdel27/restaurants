@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Restaurants
 
 
@@ -90,3 +91,24 @@ For open source projects, say how it is licensed.
 
 ## Project status
 If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+=======
+## Village Diet Project
+
+## packages using :
+
+1- `spatie/laravel-permission`
+
+2- `mcamara/laravel-localization`
+
+3- `astrotomic/laravel-translatable`
+
+4- `willvincent/laravel-rateable`
+
+5- `laravel/ui`
+
+6- `matt-daneshvar/laravel-survey`
+
+## Theme :
+
+Majestic Admin , Bootstrap 4
+>>>>>>> 77253df (initial comment)
