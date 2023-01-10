@@ -23,17 +23,18 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-//        $this->registerPolicies();
-//
-//        Gate::before(function ($user, $ability) {
-//            if (
-//                $user &&
-//                $user->isSuperAdmin()
-//                && $user->email === config('permission.admin_user_name')
-//            )
-//                return true;
-//
-//            return null;
-//        });
+         $this->registerPolicies();
+
+        Gate::before(function ($user, $ability) {
+            if (
+                $user &&
+                $user->isSuperAdmin()
+                && $user->email === config('permission.admin_user_name')
+            )
+                return true;
+
+            return null;
+        });
+
     }
 }

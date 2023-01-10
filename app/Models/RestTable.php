@@ -9,4 +9,9 @@ class RestTable extends Model
 {
     protected $guarded = [];
 
+    protected $fillable=['number','cost','user_id','date','qr_code'];
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
 }

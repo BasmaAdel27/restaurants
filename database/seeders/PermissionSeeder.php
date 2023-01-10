@@ -1,51 +1,20 @@
 <?php
 
-namespace App\Console\Commands;
+namespace Database\Seeders;
 
-use Database\Seeders\PermissionSeeder;
-use Illuminate\Console\Command;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class CreateRoutePermissionsCommand extends Command
+class PermissionSeeder extends Seeder
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'permission:create-permission-routes';
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Create a permission routes.';
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
-    public function handle()
+    public function run()
     {
-        /**
-         *  This array contains all public routes
-         *
-         * @var array
-         */
+
         $publicRoutes = [
             'login',
             'logout',
@@ -55,7 +24,10 @@ class CreateRoutePermissionsCommand extends Command
             'password.reset',
             'password.update',
             'password.confirm',
-            'admin.'
+            'admin.',
+            'admin.profile.index',
+            'admin.profile.store',
+
         ];
 
         $this->truncateTables();
@@ -63,7 +35,7 @@ class CreateRoutePermissionsCommand extends Command
         foreach (Route::getRoutes() as $route) {
             if (
                 $route->getName() != ''
-                && $route->getAction()['middleware']['0'] == 'web'
+                && @$route->getAction()['middleware']['0'] == 'web'
                 && !Permission::where('name', $route->getName())->exists()
                 && !in_array($route->getName(), $publicRoutes)
                 && !str_contains($route->getName(), 'edit')
@@ -73,8 +45,6 @@ class CreateRoutePermissionsCommand extends Command
             }
         }
         $this->createRolePermissions();
-
-        $this->info('Permission routes added successfully.');
     }
 
     private static function createRolePermissions()

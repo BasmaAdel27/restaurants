@@ -2,27 +2,22 @@
 
 namespace Database\Seeders;
 
-use App\Models\ContactUs;
-use App\Models\Setting;
-use App\Models\Subscription;
+
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
+
     public function run()
     {
+        $this->call(PermissionSeeder::class);
 
-        $user = \App\Models\User::factory()->create([
-            'email' =>'admin@restaurants.com',
-            'user_type'=>'admin'
-        ]);
+        $user = User::factory()->create([
+              'email' => config('permission.admin_user_name'),
+              'user_type'=>'admin'
+        ])->assignRole('admin');
 
-        User::factory(10)->create();
+        User::factory(5)->create();
     }
 }

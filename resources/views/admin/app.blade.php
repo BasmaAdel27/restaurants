@@ -36,8 +36,7 @@
 <script>
   $(document).ready(function(){
     // Initialize select2
-    $("#truck").select2();
-    $("#driver").select2();
+    $("#restaurant").select2();
   });
 </script>
 </body>

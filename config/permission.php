@@ -2,7 +2,7 @@
 
 return [
 
-    'admin_user_name' => 'superadmin@village.com',
+    'admin_user_name' => 'admin@restaurants.com',
     'models' => [
 
         /*
