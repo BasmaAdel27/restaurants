@@ -22,12 +22,18 @@ Route::group(
           Route::group([
                 'as' => 'admin.',
                 'prefix' => 'admin',
-                'middleware' => ['auth'],
+                'middleware' => ['auth','role:admin'],
           ], function () {
               require('web/admin.php');
           });
 
-
+          Route::group([
+                'as' => 'restaurant.',
+                'prefix' => 'restaurant',
+                'middleware' => ['auth','role:restaurant'],
+          ], function () {
+              require('web/restaurant.php');
+          });
       }
 );
 

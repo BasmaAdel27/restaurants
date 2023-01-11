@@ -15,12 +15,14 @@ class HomeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->only(['home']);
+        $this->middleware('permission:admin.dashboard')->only(['home']);
+
     }
 
     public function home()
     {
-        return view('admin.dashboard');
+        $restaurants=User::whereHas('roles', fn ($q) => $q->whereIn('name', ['restaurant']))->count();
+        return view('admin.dashboard',compact('restaurants'));
     }
 
 

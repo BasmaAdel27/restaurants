@@ -13,7 +13,15 @@ class HomeController extends Controller
 
     public function index()
     {
-        return redirect()->route('admin.dashboard');
 
+        $user = auth()->user();
+        if ($user->isSuperAdmin() || empty(array_intersect(
+                    $user->roles()->pluck('name')->toArray(),
+                    ['restaurant']
+              ))) {
+            return redirect()->route('admin.dashboard');
+        } elseif (in_array('restaurant', $user->roles()->pluck('name')->toArray())) {
+            return redirect()->route('restaurant.dashboard');
+        }
     }
 }

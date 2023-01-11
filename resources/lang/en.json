@@ -40,7 +40,10 @@
   "user_name": "User Name",
   "table_details": "Table Details",
   "qr_code": "Qr Code",
-  "restaurants": "Restaurants"
+  "restaurants": "Restaurants",
+  "customers": "Customers",
+  "branches": "Branches",
+  "sections": "Sections"
 }
 
 

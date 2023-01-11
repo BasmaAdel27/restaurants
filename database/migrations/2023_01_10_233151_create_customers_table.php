@@ -21,6 +21,7 @@ class CreateCustomersTable extends Migration
             $table->string('email')->unique();
             $table->string('phone')->unique();
             $table->date('birth_date');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }
