@@ -52,7 +52,6 @@ class PermissionSeeder extends Seeder
     {
         $adminPermissionIds = Permission::where('name', 'like', 'admin.%')->orWhere('name', 'home')->pluck('id');
         $restaurantPermissionIds = Permission::where('name', 'like', 'restaurant.%')->orWhere('name', 'home')->pluck('id');
-        dd($restaurantPermissionIds);
         Role::create(['name' => 'admin'])->permissions()->sync($adminPermissionIds);
         Role::create(['name' => 'restaurant'])->permissions()->sync($restaurantPermissionIds);
     }

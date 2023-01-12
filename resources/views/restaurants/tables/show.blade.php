@@ -1,11 +1,11 @@
 @extends('admin.app')
 @section('title') @lang('tables') @endsection
 @section('content')
-
+<div class="container">
   <div class="card mt-5">
     <div class="card-header d-flex justify-content-between">
       <h2 class="mb-4">@lang('tables')</h2>
-      <a href="{{ route('admin.tables.index') }}" class="btn btn-outline-dark btn-lg font-weight-bold">@lang('back')</a>
+      <a href="{{ route('restaurant.tables.index') }}" class="btn btn-outline-dark btn-lg font-weight-bold">@lang('back')</a>
     </div>
     <div class="card-body">
       <p class="card-description">
@@ -17,8 +17,8 @@
           {{$table->number}}
         </div>
         <div class="form-group col-6">
-          <label><strong>@lang("cost") :</strong></label>
-          {{$table->cost}}
+          <label><strong>@lang("table_name") :</strong></label>
+          {{$table->name}}
         </div>
         <div class="form-group col-6">
           <label><strong>@lang("has_paid") :</strong></label>
@@ -29,20 +29,26 @@
           @endif
         </div>
         <div class="form-group col-6">
-          <label><strong>@lang("user_name") :</strong></label>
-         {{$table->user->getFullNameAttribute()}}
+          <label><strong>@lang("branch") :</strong></label>
+         {{$table->branch->name}}
+        </div>
+        <div class="form-group col-6">
+          <label><strong>@lang("section") :</strong></label>
+         {{$table->section->name}}
         </div>
         <div class="form-group col-6">
           <label><strong>@lang("qr_code") :</strong></label>
-          <img src="{{asset($table->qr_code)}}" height="200px" width="200px">
+          <div class="card" style="width: 15rem;height:20rem;margin: auto;">
+            <img src="{{asset($table->qr_code)}}" class="card-img-top" alt="..." id="print_this" >
+            <div class="card-body" style=" padding: 1.5rem 0;">
+              <form>
+                <button type="button" class="btn btn-success m-2" id="print"
+                        style="{{ (app()->getLocale() =='ar') ? 'left:0;' : 'right:0;' }}">@lang('print')</button>
+              </form>
+            </div>
+          </div>
         </div>
-
-
-
-
       </div>
-
-
 
     </div>
 

@@ -9,9 +9,20 @@ class RestTable extends Model
 {
     protected $guarded = [];
 
-    protected $fillable=['number','cost','user_id','date','qr_code'];
+    protected $fillable=['number','name','qr_code','section_id','branch_id'];
+
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+      public function section(){
+        return $this->belongsTo(Section::class);
+    }
+
+      public function branch(){
+        return $this->belongsTo(Branch::class);
+    }
+
+
 
 }

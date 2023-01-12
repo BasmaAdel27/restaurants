@@ -47,7 +47,12 @@
   "birth_date": "Birth Date",
   "date_from": "Date From",
   "date_to": "Date To",
-  "search": "Search"
+  "search": "Search",
+  "branch_name": "Branch Name",
+  "section_name": "Section Name",
+  "table_name": "Table Name",
+  "print": "Print",
+  "QrCode_table": "qr-code for table"
 }
 
 

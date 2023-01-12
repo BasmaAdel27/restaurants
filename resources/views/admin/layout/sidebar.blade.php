@@ -33,6 +33,14 @@
       </a>
     </li>
     @endcan
+    @can('restaurant.tables.index')
+    <li class="nav-item">
+      <a class="nav-link" href="{{route('restaurant.tables.index')}}">
+        <i class="mdi mdi-food menu-icon"></i>
+        <span class="menu-title">@lang('tables')</span>
+      </a>
+    </li>
+    @endcan
     @endrole
 
     @can('admin.dashboard')

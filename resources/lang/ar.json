@@ -49,7 +49,12 @@
   "birth_date": "تاريخ الميلاد",
   "date_from": "من تاريخ :",
   "date_to": "إلى تاريخ :",
-  "search": "بحث"
+  "search": "بحث",
+  "branch_name": "اسم الفرع",
+  "section_name": "اسم القسم",
+  "table_name": "اسم الطاوله",
+  "print": "طباعة",
+  "QrCode_table": "رمز الاستجابه السريع للطاوله"
 
 
 

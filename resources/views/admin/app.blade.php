@@ -36,7 +36,8 @@
 <script>
   $(document).ready(function(){
     // Initialize select2
-    $("#restaurant").select2();
+    $("#branch").select2();
+    $("#section").select2();
   });
 </script>
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">

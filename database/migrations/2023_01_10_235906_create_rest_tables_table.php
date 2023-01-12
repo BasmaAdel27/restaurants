@@ -23,7 +23,6 @@ class CreateRestTablesTable extends Migration
             $table->boolean('has_paid')->default(false);
             $table->string('qr_code')->nullable();
             $table->string('qr_path')->nullable();
-            $table->timestamp('date')->useCurrent();
             $table->timestamps();
         });
     }
