@@ -2,7 +2,7 @@
 
 namespace App\DataTables\Restaurant;
 
-use App\Models\Restaurant/BranchDataTable;
+use App\Models\Branch;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -11,79 +11,48 @@ use Yajra\DataTables\Services\DataTable;
 
 class BranchDataTable extends DataTable
 {
-    /**
-     * Build DataTable class.
-     *
-     * @param mixed $query Results from query() method.
-     * @return \Yajra\DataTables\DataTableAbstract
-     */
+
     public function dataTable($query)
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'restaurant/branchdatatable.action');
+              ->editColumn('Action', function ($query) {
+                  return view('restaurants.branches.datatable.action', compact('query'));
+              })->rawColumns(['Action']);
     }
 
-    /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Restaurant/BranchDataTable $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function query(Restaurant/BranchDataTable $model)
+
+    public function query()
     {
-        return $model->newQuery();
+        return Branch::select('branches.*')->where('user_id',auth()->id())->newQuery();
     }
 
-    /**
-     * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
-     */
+
     public function html()
     {
         return $this->builder()
-                    ->setTableId('restaurant/branchdatatable-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('create'),
-                        Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    );
+              ->columns($this->getColumns())
+              ->minifiedAjax()
+              ->dom('lBfrtip')
+              ->orderBy(1)
+              ->lengthMenu([7, 10, 25, 50, 75, 100])
+              ->buttons(
+                    Button::make('excel'),
+              );
     }
 
-    /**
-     * Get columns.
-     *
-     * @return array
-     */
     protected function getColumns()
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+              Column::make('id')->title(trans('ID')),
+              Column::make('name')->orderable(true)->title(trans('name')),
+              Column::make('created_at')->title(trans('created_at')),
+              Column::make('updated_at')->title(trans('created_at')),
+              Column::make('Action')->title(trans('action'))->searchable(false)->orderable(false)
         ];
     }
-
-    /**
-     * Get filename for export.
-     *
-     * @return string
-     */
     protected function filename()
     {
-        return 'Restaurant/Branch_' . date('YmdHis');
+        return 'Restaurant_Branch_' . date('YmdHis');
     }
 }

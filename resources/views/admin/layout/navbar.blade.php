@@ -14,9 +14,9 @@
     <ul class="navbar-nav">
       <select name="locale" class="form-control" id="change-locale">
         @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-        <option value="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}" {{ app()->getLocale() ==
+          <option value="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}" {{ app()->getLocale() ==
           $localeCode ? 'selected' : '' }}>@lang($localeCode)
-        </option>
+          </option>
         @endforeach
       </select>
     </ul>

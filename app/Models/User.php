@@ -65,4 +65,16 @@ class User extends Authenticatable
         return $this->hasMany(RestTable::class,'user_id');
     }
 
+    public function customers(){
+        return $this->hasMany(Customer::class,'user_id');
+    }
+
+    public function sections(){
+        return $this->hasMany(Section::class,'user_id');
+    }
+
+    public function branches(){
+        return $this->hasMany(Branch::class,'user_id');
+    }
+
 }

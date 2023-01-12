@@ -45,7 +45,11 @@
   "qr_code": "رمز الاستجابة السريعة",
   "customers": "العملاء",
   "branches": "الفروع",
-  "sections": "الأقسام"
+  "sections": "الأقسام",
+  "birth_date": "تاريخ الميلاد",
+  "date_from": "من تاريخ :",
+  "date_to": "إلى تاريخ :",
+  "search": "بحث"
 
 
 

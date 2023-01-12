@@ -2,7 +2,7 @@
 
 namespace App\DataTables\Restaurant;
 
-use App\Models\Restaurant/CustomerDataTable;
+use App\Models\Customer;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -11,79 +11,59 @@ use Yajra\DataTables\Services\DataTable;
 
 class CustomerDataTable extends DataTable
 {
-    /**
-     * Build DataTable class.
-     *
-     * @param mixed $query Results from query() method.
-     * @return \Yajra\DataTables\DataTableAbstract
-     */
+
     public function dataTable($query)
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'restaurant/customerdatatable.action');
+              ->editColumn('first_name', function ($query) {
+                  return $query->first_name.' '.$query->last_name;
+              }) ->editColumn('Action', function ($query) {
+                  return view('restaurants.customers.datatable.action', compact('query'));
+              })->rawColumns(['first_name','Action']);
     }
 
-    /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Restaurant/CustomerDataTable $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function query(Restaurant/CustomerDataTable $model)
+
+    public function query()
     {
-        return $model->newQuery();
+       $customers= Customer::select('customers.*')->where('user_id',auth()->id())->newQuery();
+        if ($this->request()->get('date_from') && $this->request()->get('date_to')){
+            return Customer::select('customers.*')->where('user_id',auth()->id())->
+            whereBetween('created_at',[$this->request->date_from, $this->request->date_to])->newQuery();
+        }
+        else{
+            return $customers;
+        }
     }
 
-    /**
-     * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
-     */
     public function html()
     {
         return $this->builder()
-                    ->setTableId('restaurant/customerdatatable-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('create'),
-                        Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    );
+              ->columns($this->getColumns())
+              ->minifiedAjax()
+              ->dom('lBfrtip')
+              ->orderBy(1)
+              ->lengthMenu([7, 10, 25, 50, 75, 100])
+              ->buttons(
+                    Button::make('excel'),
+              );
     }
 
-    /**
-     * Get columns.
-     *
-     * @return array
-     */
     protected function getColumns()
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+              Column::make('id')->title(trans('ID')),
+              Column::make('first_name')->orderable(true)->title(trans('name')),
+              Column::make('email')->orderable(true)->title(trans('email')),
+              Column::make('phone')->orderable(true)->title(trans('phone')),
+              Column::make('address')->orderable(true)->title(trans('address')),
+              Column::make('birth_date')->title(trans('birth_date')),
+              Column::make('created_at')->title(trans('created_at')),
+              Column::make('Action')->title(trans('action'))->searchable(false)->orderable(false)
         ];
     }
-
-    /**
-     * Get filename for export.
-     *
-     * @return string
-     */
     protected function filename()
     {
-        return 'Restaurant/Customer_' . date('YmdHis');
+        return 'Restaurant_Customer_' . date('YmdHis');
     }
 }

@@ -43,7 +43,11 @@
   "restaurants": "Restaurants",
   "customers": "Customers",
   "branches": "Branches",
-  "sections": "Sections"
+  "sections": "Sections",
+  "birth_date": "Birth Date",
+  "date_from": "Date From",
+  "date_to": "Date To",
+  "search": "Search"
 }
 
 

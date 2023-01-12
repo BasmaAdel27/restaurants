@@ -2,84 +2,69 @@
 
 namespace App\Http\Controllers\Restaurant;
 
+use App\DataTables\Restaurant\BranchDataTable;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Restaurant\BranchRequest;
+use App\Models\Branch;
 use Illuminate\Http\Request;
 
 class branchController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct(){
+        $this->middleware('permission:restaurant.branches.index')->only(['index']);
+        $this->middleware('permission:restaurant.branches.store')->only(['store']);
+        $this->middleware('permission:restaurant.branches.update')->only(['update']);
+        $this->middleware('permission:restaurant.branches.delete')->only(['delete']);
+
+    }
+    public function index(BranchDataTable $BranchDataTable)
     {
-        //
+        return $BranchDataTable->render('restaurants.branches.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        //
+        return view('restaurants.branches.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(BranchRequest $request,Branch $branch)
     {
-        //
+        $data=$request->validated();
+        $branch->fill($data);
+        $branch->user_id=auth()->id();
+        $branch->save();
+        return redirect()->route('restaurant.branches.index')->with('success',trans('created_successfully'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+
+    public function edit(Branch $branch)
     {
-        //
+        return view('restaurants.branches.edit',compact('branch'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+
+    public function update(BranchRequest $request, Branch $branch)
     {
-        //
+        $data=$request->validated();
+        $branch->fill($data)->save();
+
+        return redirect()->route('restaurant.branches.index')->with('success',trans('updated_successfully'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+
+
+    public function destroy(Branch $branch)
     {
-        //
+        $branch->delete();
+        return redirect()->route('restaurant.branches.index')->with('success',trans('deleted_successfully'));
+
     }
 }

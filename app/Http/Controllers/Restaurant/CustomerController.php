@@ -2,84 +2,67 @@
 
 namespace App\Http\Controllers\Restaurant;
 
+use App\DataTables\Restaurant\CustomerDataTable;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Restaurant\CustomerRequest;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
     public function __construct(){
         $this->middleware('permission:restaurant.customers.index')->only(['index']);
+        $this->middleware('permission:restaurant.customers.store')->only(['store']);
+        $this->middleware('permission:restaurant.customers.update')->only(['update']);
+        $this->middleware('permission:restaurant.customers.delete')->only(['delete']);
 
     }
 
-    public function index()
+    public function index(CustomerDataTable $customerDataTable)
     {
-        return view('restaurants.dashboard');
+       return $customerDataTable->render('restaurants.customers.index') ;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        //
+        return view('restaurants.customers.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(CustomerRequest $request,Customer $customer)
     {
-        //
+        $data=$request->validated();
+        $customer->fill($data);
+        $customer->user_id=auth()->id();
+        $customer->save();
+        return redirect()->route('restaurant.customers.index')->with('success',trans('created_successfully'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+
+    public function edit(Customer $customer)
     {
-        //
+     return view('restaurants.customers.edit',compact('customer'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(CustomerRequest $request, Customer $customer)
     {
-        //
+        $data=$request->validated();
+        $customer->fill($data)->save();
+        return redirect()->route('restaurant.customers.index')->with('success',trans('updated_successfully'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+
+    public function destroy(Customer $customer)
     {
-        //
+        $customer->delete();
+        return redirect()->route('restaurant.customers.index')->with('success',trans('deleted_successfully'));
+
     }
 }

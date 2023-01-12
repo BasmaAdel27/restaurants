@@ -18,7 +18,7 @@ class UserDataTable extends DataTable
               ->eloquent($query)
               ->editColumn('Action', function ($query) {
                   return view('admin.restaurants.datatable.action', compact('query'));
-              })->rawColumns(['first_name','Action']);
+              })->rawColumns(['Action']);
 
     }
 
@@ -38,11 +38,8 @@ class UserDataTable extends DataTable
               ->orderBy(1)
               ->lengthMenu([7, 10, 25, 50, 75, 100])
               ->buttons(
-                    Button::make('create'),
-                    Button::make('export'),
-                    Button::make('print'),
-                    Button::make('reset'),
-                    Button::make('reload')
+                    Button::make('excel'),
+
               );
     }
 

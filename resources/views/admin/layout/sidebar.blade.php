@@ -28,7 +28,7 @@
     @can('restaurant.sections.index')
     <li class="nav-item">
       <a class="nav-link" href="{{route('restaurant.sections.index')}}">
-        <i class="mdi mdi-format-section menu-icon"></i>
+        <i class="mdi mdi-package menu-icon"></i>
         <span class="menu-title">@lang('sections')</span>
       </a>
     </li>
