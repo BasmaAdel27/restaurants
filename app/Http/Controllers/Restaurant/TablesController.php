@@ -16,6 +16,7 @@ class TablesController extends Controller
     public function __construct(){
         $this->middleware('permission:restaurant.tables.index')->only(['index']);
         $this->middleware('permission:restaurant.tables.store')->only(['store']);
+        $this->middleware('permission:restaurant.tables.show')->only(['show']);
         $this->middleware('permission:restaurant.tables.update')->only(['update']);
         $this->middleware('permission:restaurant.tables.delete')->only(['delete']);
 
